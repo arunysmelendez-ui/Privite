@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>¡Feliz Cumpleaños Kati con Regalo 3D!</title>
+<style>
+  /* Fondo noche azul oscuro */
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #0a102a, #121a4a);
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    display: flex;
+    flex-direction: column; /* <-- Añade esto para apilar verticalmente */
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    overflow-x: hidden;
+    color: #e0dfff;
+  }
+  .container {
+    perspective: 1600px;
+    width: 100vw;      /* <-- Cambia a ancho completo de la ventana */
+    max-width: 600px;  /* <-- Opcional: limita el ancho máximo */
+    height: auto;      /* <-- Permite que el alto se ajuste al contenido */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    margin-top: 40px;  /* <-- Espacio superior opcional */
+    position: relative;
+  }
+
+  /* Regalo 3D */
+  .regalo {
+  width: 280px;
+  height: auto;
+  margin: 0 auto;
+  cursor: pointer;
+  display: block;
+  }
+
+  .regalo:hover {
+  transform: scale(1.1); /* agranda un 10% al pasar el cursor */
+}
+
+  /* Base regalo 
+  .base {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 180px;
+    border-radius: 0 0 35px 35px;
+    background: linear-gradient(135deg, #8a1d5b, #d16e9e);
+    box-shadow:
+      inset 0 0 50px #ff9de4,
+      inset 0 -15px 30px #730e48,
+      0 30px 40px rgba(212, 92, 155, 0.75);
+    filter: drop-shadow(0 10px 20px rgba(245, 89, 155, 0.7));
+    z-index: 1;
+  }
+
+  /* Tapa regalo 
+  .tapa {
+    position: absolute;
+    width: 100%;
+    height: 120px;
+    border-radius: 35px 35px 0 0;
+    background: linear-gradient(135deg, #d96ca5, #8a1d5b);
+    box-shadow:
+      inset 0 0 60px #ff9ae9,
+      inset 0 15px 25px #720e4a,
+      0 15px 35px rgba(238, 84, 181, 0.8);
+    top: 0;
+    left: 0;
+    transform-origin: bottom center;
+    backface-visibility: hidden;
+    will-change: transform;
+    transition: box-shadow 1.2s ease;
+    z-index: 10;
+  }
+  .regalo.abierto .tapa {
+    transform: rotateX(-125deg);
+    box-shadow: none;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Lazo 
+  .lazo {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    width: 65px;
+    height: 140px;
+    background: linear-gradient(135deg, #ffa1d9, #8a2d68);
+    border-radius: 35px / 70px;
+    box-shadow:
+      inset 15px 0 30px #ffb8e6,
+      inset -10px 0 24px #6d1f47,
+      0 20px 20px rgba(252, 77, 171, 0.95);
+    transform: translateX(-50%);
+    animation: pulsarLazo 2.8s ease-in-out infinite;
+    z-index: 15;
+  }
+  .lazo::before,
+  .lazo::after {
+    content: "";
+    position: absolute;
+    width: 36px;
+    height: 90px;
+    background: linear-gradient(135deg, #ffc1e4, #9b2e75);
+    border-radius: 70% 30% 30% 70% / 65% 35% 35% 65%;
+    box-shadow:
+      inset 10px 0 22px #ffc7eb,
+      inset -5px 0 18px #7b1e56,
+      0 12px 20px rgba(232, 91, 166, 0.95);
+    animation: pulsarLazo 2.8s ease-in-out infinite;
+    top: 23px;
+    opacity: 0.95;
+    filter: drop-shadow(0 7px 4px #c15291);
+  }
+  .lazo::before {
+    left: -40px;
+    transform: rotate(-18deg);
+    border-radius: 60% 40% 40% 60% / 55% 45% 45% 55%;
+    animation-delay: 0s;
+  }
+  .lazo::after {
+    right: -40px;
+    transform: rotate(22deg);
+    border-radius: 40% 60% 60% 40% / 55% 45% 45% 55%;
+    animation-delay: 0.3s;
+  }
+  @keyframes pulsarLazo {
+    0%, 100% {
+      box-shadow:
+        inset 15px 0 30px #ffb8e6,
+        inset -10px 0 24px #6d1f47,
+        0 20px 20px rgba(252, 77, 171, 0.95);
+    }
+    50% {
+      box-shadow:
+        inset 17px 0 38px #ffcdf0,
+        inset -14px 0 32px #7f265a,
+        0 24px 28px rgba(255, 75, 184, 1);
+    }
+  }
+
+  /* Brillos animados 
+  .brillo {
+    position: absolute;
+    background: radial-gradient(circle, #ff80c1, transparent 70%);
+    filter: drop-shadow(0 0 9px #ff7fcf);
+    opacity: 0.8;
+    border-radius: 50%;
+    animation: destello 3.8s ease-in-out infinite;
+  }
+  .brillo:nth-child(1) { width: 16px; height: 16px; top: 10%; left: 20%; animation-delay: 0s;}
+  .brillo:nth-child(2) { width: 12px; height: 12px; top: 25%; left: 83%; animation-delay: 1.4s;}
+  .brillo:nth-child(3) { width: 20px; height: 20px; top: 70%; left: 45%; animation-delay: 3s;}
+  .brillo:nth-child(4) { width: 14px; height: 14px; top: 8%; left: 65%; animation-delay: 3.9s;}
+  .brillo:nth-child(5) { width: 18px; height: 18px; top: 60%; left: 75%; animation-delay: 4.4s;}
+  .brillo:nth-child(6) { width: 15px; height: 15px; top: 50%; left: 31%; animation-delay: 2.2s;}
+
+  @keyframes destello {
+    0%, 100% {
+      opacity: 0.8;
+      filter: drop-shadow(0 0 15px #ff88ca) drop-shadow(0 0 20px #ff88ca);
+    }
+    50% {
+      opacity: 1;
+      filter: drop-shadow(0 0 28px #ff58a8) drop-shadow(0 0 35px #ff58a8);
+    }
+  }
+*/
+
+  /* Animacion escritura texto */
+  .texto-escribir {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid #fda3d6;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-top: 20px;
+    color: #fface0;
+    letter-spacing: 7px;
+    width: 0;
+    margin-left: auto;
+    margin-right: auto;
+    font-family:'Comic Sans MS', cursive, sans-serif;
+  }
+  .texto-escribir,
+.texto-nombre {
+  display: block;
+  width: 100%;
+  max-width: 600px;   /* <-- Opcional: limita el ancho máximo */
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+  .visible {
+    animation: escribir 4s steps(17) forwards, parpadeo 0.7s infinite step-end alternate;
+    width: auto;
+  }
+  @keyframes escribir {
+    to { width: auto;}
+  }
+  @keyframes parpadeo {
+    50% { border-color: transparent; }
+  }
+
+  /* Nombre */
+  .texto-nombre {
+    margin-top: 10px;
+    color: #ff96bb;
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    width: 0;
+    border-right: 3px solid #ff92b4;
+    white-space: nowrap;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    margin-bottom: 2.5rem; /* 24px de separación hacia abajo */
+  }
+  .visible-nombre {
+    animation: escribirNombre 3.5s steps(4) forwards 4.5s, parpadeo 0.7s infinite step-end alternate 4.5s;
+    width: auto;
+  }
+  @keyframes escribirNombre {
+    to { width: 4ch;}
+  }
+
+  /* Pastel */
+  .pastel-container {
+  margin: 30px auto 0 auto;
+  width: 320px;
+  height: 220px;
+  filter: drop-shadow(0 0 15px #fda3d8);
+  perspective: 900px;
+  position: relative;
+  margin-bottom: 2.5rem; /* 24px de separación hacia abajo */
+}
+.cake-3d {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  transform-style: preserve-3d;
+}
+.cake-layer {
+  position: absolute;
+  left: 50%;
+  transform-style: preserve-3d;
+  border-radius: 80px / 40px;
+  background: linear-gradient(145deg, #f7d2e0, #b55482);
+  box-shadow: 0 18px 24px rgba(149, 40, 98, 0.6);
+  transform-origin: center bottom;
+}
+.cake-layer.bottom {
+  bottom: 0;
+  width: 320px;
+  height: 90px;
+  transform: translateX(-50%) rotateX(20deg);
+}
+.cake-layer.middle {
+  bottom: 70px;
+  width: 280px;
+  height: 70px;
+  background: linear-gradient(145deg, #f8bdd4, #9e3a6c);
+  box-shadow: 0 12px 18px rgba(115, 36, 71, 0.5);
+  transform: translateX(-50%) rotateX(15deg);
+}
+.cake-layer.top {
+  bottom: 130px;
+  width: 240px;
+  height: 50px;
+  background: linear-gradient(150deg, #faadc9, #8f285e);
+  box-shadow: 0 8px 12px rgba(102, 29, 62, 0.5);
+  transform: translateX(-50%) rotateX(10deg);
+}
+
+.candles {
+  position: absolute;
+  bottom: 170px;
+  width: 100%;
+  height: 60px;
+}
+.candle {
+  position: absolute;
+  bottom: 0;
+  width: 14px;
+  height: 45px;
+  background: linear-gradient(145deg, #fff6b7, #decc6e);
+  border-radius: 4px;
+  box-shadow: inset 0 0 6px #fff7ae;
+}
+
+.flames {
+  position: absolute;
+  bottom: 210px;
+  width: 100%;
+  height: 30px;
+}
+.flame {
+  position: absolute;
+  width: 16px;
+  height: 28px;
+  border-radius: 30% 70% 50% 50% / 60% 40% 60% 40%;
+  background: radial-gradient(circle at center, #ffd93b 35%, #ff512b 70%);
+  filter: drop-shadow(0 0 8px #ffbb3b);
+  animation: flicker3d 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes flicker3d {
+  0% {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+    filter: drop-shadow(0 0 7px #ffcb3b);
+  }
+  50% {
+    transform: scaleY(1.4) translateY(-7px);
+    opacity: 0.75;
+    filter: drop-shadow(0 0 16px #ff6c22);
+  }
+  100% {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+    filter: drop-shadow(0 0 7px #ffcb3b);
+  }
+}
+
+
+  /* Numero */
+  .numero-16 {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-weight: 900;
+    font-size: 4.2rem;
+    margin-top: -12px;
+    color: #ffb2d8;
+    text-shadow:
+      0 0 15px #ff82bf,
+      0 0 30px #fe3da1;
+  }
+
+  /* Confeti */
+  #confeti {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+  }
+
+  /* Sticker */
+  .sticker {
+  position: absolute;
+  width: 90px;
+  height: auto;
+  z-index: 2;
+  opacity: 0.85;
+  pointer-events: none;
+}
+.sticker-uno {
+  top: 60px;
+  left: 20px;
+  animation: moverSticker1 3s ease-in-out infinite alternate;
+}
+.sticker-dos {
+  top: 320px;
+  right: 30px;
+  animation: moverSticker2 2.7s ease-in-out infinite alternate;
+}
+.sticker-tres {
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: moverSticker3 2.9s ease-in-out infinite alternate;
+}
+@keyframes moverSticker1 {
+  0% { transform: translateY(0) rotate(-8deg);}
+  100% { transform: translateY(12px) rotate(8deg);}
+}
+@keyframes moverSticker2 {
+  0% { transform: translateY(0) scale(1);}
+  100% { transform: translateY(-10px) scale(1.07);}
+}
+@keyframes moverSticker3 {
+  0% { transform: translateX(-50%) scale(1);}
+  100% { transform: translateX(-50%) scale(1.08) rotate(7deg);}
+}
+
+  /* Imagen sorpresa */
+  .imagen-sorpresa {
+    display: block;
+    margin: 30px auto 0 auto;
+    max-width: 320px;
+    width: 80%;
+    border-radius: 18px;
+    box-shadow: 0 0 30px #ffb2d8;
+    z-index: 10;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 1s cubic-bezier(.42,0,.58,1), transform 1s cubic-bezier(.42,0,.58,1);
+  }
+  .imagen-sorpresa.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .arco-sticker {
+  position: absolute;
+  width: 80px;
+  height: auto;
+  z-index: 20;
+  pointer-events: none;
+  transition: opacity 0.8s;
+}
+#sticker1 {
+  top: 200px;
+  left: -10%;
+  transform: translateX(-50%) rotate(-18deg);
+  width: 200px; /* Cambia el tamaño solo de sticker1 */
+}
+#sticker2 {
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  width: 200px; /* Cambia el tamaño solo de sticker2 */
+  transition: top 0.8s, left 0.8s;
+}
+#sticker3 {
+  top: 200px;
+  left: 110%;
+  transform: translateX(-50%) rotate(18deg);
+  width: 170px; /* Cambia el tamaño solo de sticker3 */
+}
+.regalo.fade-out {
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(.42,0,.58,1);
+  pointer-events: none;
+}
+.abre-regalo-texto {
+  margin-top: 18px;
+  font-size: 2rem;
+  color: #fface0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px #ffb2d8;
+  transition: opacity 1s cubic-bezier(.42,0,.58,1);
+}
+.abre-regalo-texto.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<div class="container" role="main" aria-live="polite">
+
+  <img src="https://imgs.search.brave.com/7KbauEJVxIWg3l3c6qvsgErAOixs56e0ESrpjfvAHd0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cGl4YWJheS5jb20v/cGhvdG8vMjAxNC8w/NC8wMi8xNy8wNS9i/b3gtMzA3ODgyXzY0/MC5wbmc" alt="Caja de regalo animada" id="regalo" class="regalo" tabindex="0" role="button" aria-pressed="false" aria-label="Caja de regalo que puedes abrir" />
+
+  <div id="abre-regalo-texto" class="abre-regalo-texto">Abre tú regalo</div>
+
+  <!-- Stickers en arco, ocultos al inicio -->
+  <img src="https://imgs.search.brave.com/5ZEbzldvOHmd0c1VD-PHk1XZ5zHehiSzXHqRqg4hu40/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2M5Lzlk/LzUxL2M5OWQ1MWFi/ZjRhN2Q1YWNlNmM5/MzEwMGVjYTA2MmFl/LmpwZw" id="sticker1" class="sticker arco-sticker" style="opacity:0;" alt="Sticker decorativo 1" />
+  <img src="https://imgs.search.brave.com/2UxqMRjx1x3AG2k01D4ac87LVVHjnlHelOSqDQJzTrk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS50ZW5vci5jb20v/NERpRnd3dzY1NDhB/QUFBbS9raXR0eS53/ZWJw" id="sticker2" class="sticker arco-sticker" style="opacity:0;" alt="Sticker decorativo 2" />
+  <img src="https://imgs.search.brave.com/_JVwihE1mLaE63wCwygQ0By6GYHzAa7acnZL-rWn9IM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS50ZW5vci5jb20v/R3FXYjFPb0gwbllB/QUFBTS9tb25rZXkt/ZGFuY2luZy1yb2Js/b3gtbW9ua2V5LWRh/bmNpbmcuZ2lm.gif" id="sticker3" class="sticker arco-sticker" style="opacity:0;" alt="Sticker decorativo 3" />
+
+  <div id="texto-feliz" class="texto-escribir" aria-live="polite" aria-atomic="true"></div>
+  <div id="texto-nombre" class="texto-nombre" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="pastel-container" aria-label="Torta de cumpleaños" style="display:none;">
+  <div class="cake-3d">
+    <div class="cake-layer bottom"></div>
+    <div class="cake-layer middle"></div>
+    <div class="cake-layer top"></div>
+
+    <div class="candles">
+      <div class="candle" style="left: 20%;"></div>
+      <div class="candle" style="left: 40%;"></div>
+      <div class="candle" style="left: 60%;"></div>
+      <div class="candle" style="left: 80%;"></div>
+    </div>
+
+    <div class="flames">
+      <div class="flame" style="left: 20%;"></div>
+      <div class="flame" style="left: 40%;"></div>
+      <div class="flame" style="left: 60%;"></div>
+      <div class="flame" style="left: 80%;"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Imagen sorpresa, oculta al inicio -->
+  <img src="https://media.discordapp.net/attachments/1389813369854492705/1389870538456830002/IMG_0115.png?ex=68a7738e&is=68a6220e&hm=5113f410dacf0fe58f62bc3677fddf50efd7305b306f5ea73ef2b76bb36476a6&=&format=webp&quality=lossless&width=431&height=585" id="imagen-sorpresa" class="imagen-sorpresa" alt="Imagen sorpresa" style="display:none;" />
+
+</div>
+
+<div id="emoji-diabla" style="display:none; font-size:25rem; text-align:center; margin-top:20px; position: fixed; top: 50%; left:50%; transform: translate(-50%, -50%); z-index: 10000;">
+  😈
+</div>
+
+<canvas id="confeti"></canvas>
+<audio id="audio-cumple" src="https://cdn.discordapp.com/attachments/1389240416183783434/1407859598291111936/Un_Ano_Mas_Cumpleanos_Feliz.mp3?ex=68a7a2ec&is=68a6516c&hm=ad62b14cd38caa32a9d922102119d71b2631664f1b8de532489081e765165c7b&"></audio>
+<audio id="audio-segunda" src="https://cdn.discordapp.com/attachments/1389240416183783434/1407951629071814747/Tu_eres_mala.mp3?ex=68a7f8a2&is=68a6a722&hm=7eee6f2b2459a2424cb8e60ed95291a8439487322d64d2a5e5fc612e8a252bdb&"></audio>
+
+<script>
+  const regalo = document.getElementById('regalo');
+  const textoFeliz = document.getElementById('texto-feliz');
+  const textoNombre = document.getElementById('texto-nombre');
+  const pastel = document.querySelector('.pastel-container');
+  const confetiCanvas = document.getElementById('confeti');
+  const imagenSorpresa = document.getElementById('imagen-sorpresa');
+  const sticker1 = document.getElementById('sticker1');
+  const sticker2 = document.getElementById('sticker2');
+  const sticker3 = document.getElementById('sticker3');
+  const audioCumple = document.getElementById('audio-cumple');
+  const audioSegunda = document.getElementById('audio-segunda');
+  const abreRegaloTexto = document.getElementById('abre-regalo-texto');
+  let confetiActivo = false;
+
+
+
+  function mostrarTextoAnimado(elemento, texto, callback) {
+    let i = 0;
+    elemento.textContent = '';
+    elemento.classList.remove('visible');
+    const intervalo = setInterval(() => {
+      if (i < texto.length) {
+        elemento.textContent += texto.charAt(i);
+        i++;
+      } else {
+        clearInterval(intervalo);
+        elemento.classList.add('visible');
+        if (callback) callback();
+      }
+    }, 130);
+  }
+
+  function moverSticker2Aleatorio() {
+  const container = document.querySelector('.container');
+  const sticker2 = document.getElementById('sticker2');
+  const containerRect = container.getBoundingClientRect();
+  const stickerWidth = sticker2.offsetWidth;
+  const stickerHeight = sticker2.offsetHeight;
+
+  setInterval(() => {
+    // Calcula posiciones aleatorias dentro del contenedor
+    const maxTop = container.offsetHeight - stickerHeight;
+    const maxLeft = container.offsetWidth - stickerWidth;
+    const top = Math.random() * maxTop;
+    const left = Math.random() * maxLeft;
+    sticker2.style.position = "absolute";
+    sticker2.style.top = top + "px";
+    sticker2.style.left = left + "px";
+  }, 1000);
+}
+
+  function abrirRegalo() {
+    if(regalo.classList.contains('abierto')) return;
+    regalo.classList.add('abierto');
+
+    // Reproducir audio
+    audioCumple.play();
+
+    // Después de 1 minuto (60000 ms), cambiar a la segunda canción
+    setTimeout(() => {
+  audioCumple.pause();
+  audioSegunda.play();
+
+  // Eliminar o esconder todo lo visual, por ejemplo:
+  const container = document.querySelector('.container');
+  container.style.display = 'none';  // Oculta todo el contenedor principal
+  document.getElementById('emoji-diabla').style.display = 'block';
+
+  // Mostrar emoji diabla
+  const emoji = document.getElementById('emoji-diabla');
+  emoji.style.display = 'block';
+}, 60000);
+
+    // Desvanecer la caja de regalo y el texto
+    setTimeout(() => {
+      regalo.classList.add('fade-out');
+      abreRegaloTexto.classList.add('fade-out');
+      setTimeout(() => {
+        regalo.style.display = 'none';
+        abreRegaloTexto.style.display = 'none';
+      }, 1000);
+    }, 600);
+
+    // Los stickers aparecen uno por uno después de abrir la caja
+    setTimeout(() => { sticker1.style.opacity = 1; }, 3000);
+    setTimeout(() => { sticker2.style.opacity = 1; }, 1000);
+    setTimeout(() => { sticker3.style.opacity = 1; }, 3000);
+
+    // Inicia el movimiento aleatorio del sticker2 después de que aparece
+    setTimeout(() => {
+      moverSticker2Aleatorio();
+    }, 3000);
+
+    setTimeout(() => {
+  mostrarTextoAnimado(textoFeliz, 'Feliz cumpleaños', () => {
+    mostrarTextoAnimado(textoNombre, 'Kati', () => {
+      pastel.style.display = 'block';
+
+      imagenSorpresa.style.display = 'block';
+      void imagenSorpresa.offsetWidth;
+      imagenSorpresa.classList.add('visible');
+
+      iniciarConfeti();
+    });
+  });
+}, 1600);
+  }
+
+  function mostrarImagenSorpresa() {
+    imagenSorpresa.style.display = 'block';
+    imagenSorpresa.classList.add('visible');
+  }
+
+   // --- Aquí empieza el cambio automático de imagen sorpresa ---
+          const imagenesSorpresa = [
+            ////Foto 1
+            "https://media.discordapp.net/attachments/1389813369854492705/1389869520264364113/IMG_0077.jpg?ex=68a7729c&is=68a6211c&hm=d90e83ff8ea147a367b4fb3b4475d351138c23bd7b3d29215d6513092dc39e0e&=&format=webp&width=439&height=585",
+            ////Foto 2
+            "https://media.discordapp.net/attachments/1389813369854492705/1389867557380423760/IMG-20250219-WA0002.jpg?ex=68a770c8&is=68a61f48&hm=363119e31763c1a777c3e2667045af64f50d7dbeb5c6bf6044ebb9ecbab0979a&=&format=webp&width=584&height=585",
+            ////Foto 3
+            "https://media.discordapp.net/attachments/1389813369854492705/1389870538456830002/IMG_0115.png?ex=68a7738e&is=68a6220e&hm=5113f410dacf0fe58f62bc3677fddf50efd7305b306f5ea73ef2b76bb36476a6&=&format=webp&quality=lossless&width=431&height=585",
+            ////Foto 4
+            "https://media.discordapp.net/attachments/1389240416183783434/1407925346954641408/Screenshot_20250305_072951.jpg?ex=68a7e028&is=68a68ea8&hm=985d6c86a13103269e2a8fcaf8c2e0bee81b885f6e4df014a909e8b4ed925d7e&=&format=webp&width=436&height=584",
+            ////Foto 5
+            "https://media.discordapp.net/attachments/1389240416183783434/1407925554933661816/IMG-20250715-WA0003.jpg?ex=68a7e05a&is=68a68eda&hm=b32c1fa106682b58c6fd33b23a8bebe4644f870845422e9e1ae9b6a24697c211&=&format=webp&width=329&height=585",
+            ////Foto 6
+            "https://media.discordapp.net/attachments/1389240416183783434/1407926593120243824/Screenshot_20250820_231602.jpg?ex=68a7e151&is=68a68fd1&hm=d7af485eb6a5592efc26cd96597cfcd94ccb0b9a577974e1f8ff37609ab697b5&=&format=webp&width=291&height=481",
+            ////Foto 7
+            "https://media.discordapp.net/attachments/1389240416183783434/1407926593363382433/Screenshot_20250820_231650.jpg?ex=68a7e151&is=68a68fd1&hm=dd2196ca0abc18493f3d30a45ff3e590631055077bc5362294ab4e0d1edb9806&=&format=webp&width=358&height=481"
+          ];
+          let indiceActual = 0;
+          setInterval(() => {
+            indiceActual = (indiceActual + 1) % imagenesSorpresa.length;
+            imagenSorpresa.src = imagenesSorpresa[indiceActual];
+          }, 6000);
+          // --- Fin del cambio automático ---
+
+  regalo.addEventListener('click', abrirRegalo);
+  regalo.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      abrirRegalo();
+      e.preventDefault();
+    }
+  });
+
+  function iniciarConfeti() {
+    if(confetiActivo) return;
+    confetiActivo = true;
+    const ctx = confetiCanvas.getContext('2d');
+    const width = confetiCanvas.width = window.innerWidth;
+    const height = confetiCanvas.height = window.innerHeight;
+    confetiCanvas.style.display = 'block';
+
+    const colores = ['#d3bcf4', '#f4e285', '#ffa8d3', '#b6f4d1', '#9faedd'];
+    const particulas = [];
+
+    function crearParticula() {
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height - 15,
+        r: Math.random() * 7 + 4,
+        d: Math.random() * 40 + 10,
+        color: colores[Math.floor(Math.random() * colores.length)],
+        tilt: Math.random() * 10 - 10,
+        tiltAngle: 0,
+        tiltAngleIncremental: 0.07 + Math.random() * 0.05
+      };
+    }
+
+    for (let i = 0; i < 150; i++) {
+      particulas.push(crearParticula());
+    }
+
+    function dibujar() {
+      ctx.clearRect(0, 0, width, height);
+      particulas.forEach(p => {
+        ctx.beginPath();
+        ctx.lineWidth = p.r / 2;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt + p.r / 4, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 4);
+        ctx.stroke();
+      });
+      actualizar();
+      requestAnimationFrame(dibujar);
+    }
+
+    function actualizar() {
+      particulas.forEach(p => {
+        p.tiltAngle += p.tiltAngleIncremental;
+        p.x += Math.sin(p.tiltAngle) * 2;
+        p.y += (Math.cos(p.tiltAngle) + 3 + p.r / 2) * 0.5;
+        p.tilt = Math.sin(p.tiltAngle) * 15;
+
+        if (p.y > height) {
+          p.x = Math.random() * width;
+          p.y = -10;
+          p.tilt = Math.sin(p.tiltAngle) * 15;
+        }
+      });
+    }
+
+    dibujar();
+  }
+</script>
+
+</body>
+</html>
